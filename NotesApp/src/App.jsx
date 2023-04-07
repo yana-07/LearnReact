@@ -36,11 +36,17 @@ function App() {
   }
     
   function updateNote(text) {
-    setNotes(oldNotes => oldNotes.map(oldNote => {
-      return oldNote.id === currentNoteId
-        ? { ...oldNote, body: text }
-        : oldNote
-      }))  
+    setNotes(oldNotes => {
+      const newNotes = [{id: currentNoteId, body: text}]
+      oldNotes.forEach(note => note.id != currentNoteId && newNotes.push(note));
+      return newNotes;
+    })
+    // Below function does not rearrange the notes
+    // setNotes(oldNotes => oldNotes.map(oldNote => {
+    //   return oldNote.id === currentNoteId
+    //     ? { ...oldNote, body: text }
+    //     : oldNote
+    //   }))  
   }
     
   function findCurrentNote() {
