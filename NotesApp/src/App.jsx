@@ -48,6 +48,11 @@ function App() {
     //     : oldNote
     //   }))  
   }
+
+  function deleteNote(event, noteId) {
+    event.stopPropagation() // will otherwise try to select the already deleted note which will cause an error
+    setNotes(oldNotes => oldNotes.filter(note => note.id !== noteId))
+  }
     
   function findCurrentNote() {
     return notes.find(note => {
@@ -70,13 +75,14 @@ function App() {
             currentNote={findCurrentNote()}
             setCurrentNoteId={setCurrentNoteId}
             newNote={createNewNote}
+            deleteNote={deleteNote} 
           />
           {
             currentNoteId && 
             notes.length > 0 &&
             <Editor 
                 currentNote={findCurrentNote()} 
-                updateNote={updateNote} 
+                updateNote={updateNote}
             />
           }
         </Split>
