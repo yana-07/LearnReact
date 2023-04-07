@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from "./components/Sidebar"
 import {Editor} from "./components/Editor"
 import {data} from "./data"
@@ -9,11 +9,23 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(
+    //getNotes || []
+    () => JSON.parse(localStorage.getItem("notes")) || []
+  )
+
   const [currentNoteId, setCurrentNoteId] = useState(
     (notes[0] && notes[0].id) || ""
   )
-    
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes))
+  }, [notes])
+
+  // function getNotes() {
+  //   return JSON.parse(localStorage.getItem("notes"))
+  // }
+  
   function createNewNote() {
     const newNote = {
       id: nanoid(),
@@ -28,7 +40,7 @@ function App() {
       return oldNote.id === currentNoteId
         ? { ...oldNote, body: text }
         : oldNote
-      }))
+      }))  
   }
     
   function findCurrentNote() {
