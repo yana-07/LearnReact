@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Die from "./components/Die"
 import './App.css'
+import {nanoid} from "nanoid"
 
 function App() {
   const [dice, setDice] = useState(allNewDice)
@@ -8,7 +9,8 @@ function App() {
   function generateNewDie() {
     return {
       value: Math.ceil(Math.random() * 6 ),
-      isHeld: false
+      isHeld: false,
+      id: nanoid()
     }
   }
 
@@ -23,9 +25,26 @@ function App() {
 
   const diceElements = dice.map(die => 
       <Die 
+        key={die.id} 
         value={die.value} 
+        isHeld={die.isHeld} 
+        holdDice ={() => holdDice(die.id)} 
       />
   ); 
+
+  function rollDice() {
+    setDice(prevDice => prevDice.map(die => {
+      return die.isHeld ? die : generateNewDie()
+    }))
+  }
+
+  function holdDice(id) {
+    setDice(prevDice => prevDice.map(die => {
+      return die.id === id ? 
+          {...die, isHeld: !die.isHeld} : 
+          die
+    }))
+  }
 
   return (
     <main>
@@ -34,7 +53,7 @@ function App() {
       <div className="dice-cotainer">
         {diceElements}
       </div>
-      <button>Roll</button>
+      <button onClick={rollDice}>Roll</button>
     </main>
   )
 }
