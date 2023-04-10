@@ -5,6 +5,20 @@ import {nanoid} from "nanoid"
 
 function App() {
   const [dice, setDice] = useState(allNewDice)
+  const [tenzies, setTenzies] = useState(false)
+
+  useEffect(() => {
+    // keeping two internal pieces of state in sync with each other is 
+    // a really common use case for useEffect
+    if (dice.every((die, idx) => {
+      return idx > 0 ?
+            (die.isHeld && dice[idx].value === dice[idx-1].value) : 
+            die.isHeld
+    })) {
+      console.log("You won!")
+      setTenzies(true)
+    }
+  }, [dice])
 
   function generateNewDie() {
     return {
