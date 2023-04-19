@@ -7,16 +7,17 @@ import "./Expenses.css";
 function Expenses({ items }) {
   const [filteredYear, setFilteredYear] = useState('2020');
 
-  const expenseElements = items.map((expense) => {
-    return (
-      <ExpenseItem
-        key={expense.id}
-        title={expense.title}
-        amount={expense.amount}
-        date={expense.date}
-      />
+  const expenseElements = items
+    //.filter(expense => expense.date.getFullYear().toString() === filteredYear)
+    .map(expense => expense.date.getFullYear().toString() === filteredYear && (
+        <ExpenseItem
+          key={expense.id}
+          title={expense.title}
+          amount={expense.amount}
+          date={expense.date}
+        />
+      )
     );
-  });
 
   const changeYearHandler = (year) => {
     setFilteredYear(year);
