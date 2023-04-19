@@ -1,4 +1,5 @@
 import ExpenseItem from './ExpenseItem'
+import Card from './Card'
 import './Expenses.css'
 
 function Expenses({items}) {
@@ -12,9 +13,9 @@ function Expenses({items}) {
     })
 
     return (
-        <div className="expenses">
+        <Card className="expenses">
             {expenseElements}
-        </div>
+        </Card>
     );
 }
 
