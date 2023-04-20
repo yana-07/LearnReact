@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import './ExpenseForm.css'
 
-function ExpenseForm({onSaveExpenseData}) {
+function ExpenseForm({onSaveExpenseData, onCancelEditing}) {
     const [expense, setExpense] = useState({
         title: '',
         amount: '',
@@ -67,6 +67,7 @@ function ExpenseForm({onSaveExpenseData}) {
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button type="button" onClick={onCancelEditing}>Cancel</button>
                 <button type="submit">Add Expense</button>
             </div>
         </form>
