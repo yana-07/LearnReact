@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 import Button from "../UI/Button";
-import Card from "../UI/Crad";
+import Card from "../UI/Card";
 import classes from './AddUser.module.css'
 
 const AddUser = (props) => {
@@ -16,7 +16,7 @@ const AddUser = (props) => {
             return;
         }
 
-        console.log(userInput);
+        props.onAddUser(userInput);
         setUserInput({username: '', age: ''});
     };
 
