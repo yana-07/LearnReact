@@ -1,9 +1,10 @@
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
 html {
   font-family: sans-serif;
+  background-color: #1f1f1f;
 }
 
 body {
