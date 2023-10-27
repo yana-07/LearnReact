@@ -3,7 +3,8 @@ import { createContext, useReducer } from 'react';
 const CartContext = createContext({
     items: [],
     addItem: (item) => {},
-    removeItem: (id) => {}
+    removeItem: (id) => {},
+    clearCart: () => {}
 });
 
 function cartReducer(state, action) {
@@ -53,6 +54,13 @@ function cartReducer(state, action) {
         }
     }
 
+    if (action.type === 'CLEAR_CART') {
+        return {
+            ...state,
+            items: []
+        }
+    }
+
     return state;
 }
 
@@ -73,10 +81,17 @@ export function CartContextProvider({ children }) {
         });
     }
 
+    function clearCart() {
+        dispatchCartAction({
+            type: 'CLEAR_CART'
+        });
+    }
+
     const cartContext = {
         items: cart.items,
         addItem,
-        removeItem
+        removeItem,
+        clearCart
     };
 
     // pass cart state to the CartContext Provider, because that will implicitly pass it to all other wrapped components interested in that state
