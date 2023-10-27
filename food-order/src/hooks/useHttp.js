@@ -26,7 +26,12 @@ export function useHttp(url, config, initialData) {
             setIsLoading(true);
 
             try {
-                const resData = await sendHttpRequest(url, {...config, body: data});
+                const updatedConfig = {...config};
+                if (data) {
+                    updatedConfig.body = data;
+                }
+                const resData = await sendHttpRequest(url, updatedConfig);
+
                 setData(resData);
             } catch (error) {
                 setError(error.message || 'Something went wrong.');
